@@ -1,0 +1,6 @@
+<uwsgi>
+ <socket>127.0.0.1:8081</socket>
+ <chdir>/www/web/dapizi/public_html</chdir>
+ <pythonpath>..</pythonpath>
+ <module>wsgi</module>
+</uwsgi>

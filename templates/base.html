@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+	  <head>
+	  	<meta charset="utf-8">
+		<meta content="Sumscope DAP" name="keywords">
+		<meta content="项目管理系统" name="description">
+	  	<title>{% block title %}Sumscope DAP | 牛B产品，从管理开始。{% endblock %}</title>
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet"> -->
+		<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+		 <link href="{{ STATIC_URL }}fu/fileuploader.css" rel="stylesheet">
+		{% block stylesheets %}{% endblock %}
+	  </head>
+	  <body>
+		{% block header_content %}
+			<div class="header fix">
+				<div class="wrap">
+					<div class="logo"><a href="/"><img src="{{ STATIC_URL }}img/logo.png" alt="Sumscope DAP"></a></div>
+					<ul class="nav">
+					<li><a href="/">项目</a></li>
+			          {% if user.is_authenticated %}
+			          <li><a href="{% url 'userena_profile_list' %}"><span>个人中心</span></a></li>
+			          <li><a href="{% url 'userena_umessages_list' %}"><span>消息</span></a></li>
+			          <li><a href="{% url 'userena_profile_detail' user.username %}"><span>你好 ({{ user.username }})</span></a></li>
+			          <li><a href="{% url 'userena_signout' %}"><span>退出登录</span></a></li>
+			          {% else %}
+			          <a href="{% url 'userena_signup' %}" id="" target="_blank">新用户注册</a>
+			          <li><a href="{% url 'userena_signin' %}"><span>登录</span></a></li>
+			          {% endif %}    
+			     	</ul>
+			     {% if user.is_authenticated %}	
+				<button class="btn createTopicBtn" onClick="location.href='/create-task/'">添加新项目</button>
+				<!-- <button class="btn createTopicBtn" id="CreateTopic">发起新话题</button> -->
+				{% endif %}
+				</div>
+			</div>
+		{% endblock %}
+		<div class="pageWrap fix {% block pagename %}{% endblock %}">
+			<div class="content">
+			{% block content %}{% endblock %}
+			</div>
+		</div>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ -->
+ <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+
+	  	 <script src="{{ STATIC_URL }}js/csrf_ajax.js"></script> <!--没有作用?-->  
+	  	<!--script src="{{ STATIC_URL }}js/bootstrap.min.js"></script-->
+	  	<script src="{{ STATIC_URL }}js/common.js"></script>
+	      {% block base_footer %}
+	      <div class="footer">2015 Sumscope DAP</div>
+			{% include "msg-box.html" %}
+	      {% endblock %}
+		{% block base_extend %}{% endblock %}
+
+	  </body>
+	</html>
+

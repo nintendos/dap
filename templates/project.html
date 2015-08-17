@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block pagename %}catPage{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="pageTitle">
+	<h2 class="fix"><img src="{{ cat.thumbnail }}" alt="" class="hThumbnail"><strong>{{ cat.term_name }}</strong></h2>
+</div>
+{% if children %}
+<div class="subCats">
+	<ul class="fix">
+		{% for i in children %}
+		<li><a href="/cat/{{i.term_id}}"><img src="{{i.thumbnail}}" alt=""><span class="name">{{ i.term_name }}</span></a></li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+<div class="pageContent">{{cat.description|safe}}</div>
+
+
+{% endblock %}

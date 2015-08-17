@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    theme: "modern",
+    // menubar: false,
+    plugins: [
+                "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "table contextmenu directionality emoticons template textcolor paste textcolor"
+        ],    
+    toolbar1: "insertfile undo redo | styleselect forecolor | bold italic | alignleft aligncenter alignright | bullist numlist | link image media",
+    image_advtab: true,
+    templates: [
+        {title: 'Test template 1', content: 'Test 1'},
+        {title: 'Test template 2', content: 'Test 2'}
+    ],
+    height:420,
+});
+
+</script>
+<script src="{{ STATIC_URL }}js/ZeroClipboard.js"></script>
+<script type="text/javascript">
+	//Copy Img URL
+	function copyme() {
+		// body...
+		var client = new ZeroClipboard( document.getElementsByClassName("copy-button"));
+		client.on("ready", function(readyEvent){
+		  client.on("aftercopy", function(event){
+		    alert("xxxxxxxxxx");
+		  });
+		});
+	}
+</script>
+ <form action="{% if user.is_authenticated %}/save-huo/{% else %}{% url 'userena_signin' %}{% endif %}" method="post" id="CreateHuoForm">
+{% csrf_token %}
+
+	<div id="file-uploader-demo1">		
+		<noscript>			
+			<p>Please enable JavaScript to use file uploader.</p>
+			<!-- or put a simple form for upload here -->
+		</noscript>         
+	</div>
+
+	<div class="qq-upload-extra-drop-area">Drop files here too</div>
+    <div id="imgUrlList">
+    	<ul>
+    		<!--Ajax-->
+    	</ul>
+    </div>
+    <script>        
+        function createUploader(){            
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('file-uploader-demo1'),
+                params:{'hid':'{{hid}}'},
+                action: '/img-upload/',
+                debug: true,
+                extraDropzones: [qq.getByClass(document, 'qq-upload-extra-drop-area')[0]],
+                onComplete: function(id, fileName, responseJSON){
+	                 if (responseJSON.success){
+	                 	var r = new Date().getTime();
+	                 	var p = responseJSON.pic_id;
+	                    $("#imgUrlList ul").append("<li><input type=\"radio\" id=\"thumbnail_chk_"+p+"\" value=\""+p+"\" name=\"thumbnail\" /><img src=\""+responseJSON.img_url+"\" alt=\"\" width=\"100\"><input type=\"text\" id=\"clipboard_textarea"+r+"\" class=\"slt\" value=\""+responseJSON.img_url+"\" style=\"width:500px\" /><button class=\"copy-button\" type=\"button\" data-clipboard-target=\"clipboard_textarea"+r+"\">Copy to Clipboard</button></li>");
+	                    // $("#imgUrlList li input").val(responseJSON.img_url);
+	                    // $("#imgUrlList li img").attr("src",responseJSON.img_url);
+	                    copyme();
+	                }
+	                else{
+	                    alert("error");
+	                }               	
+                },
+                // csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
+            });           
+        }
+        
+        // in your app create uploader as soon as the DOM is ready
+        // don't wait for the window to load  
+        window.onload = createUploader; 
+
+
+    </script>    
+    <div class="jumpToDetail"><a href="/{{hid}}" id="CheckNow">查看商品</a></div>
+	<div class="createHuo">
+	<div>商品名称：<input type="text" name="name" placeholder="商品名称" value="{{huo_name}}" style="width:500px"/></div>
+	<input type="hidden" name="hid" value="{{hid}}" />
+	<div class="brand">品牌：<br />
+		<ul>
+			{% for b in brand_list %}
+			<li><input type="radio" id="b{{b.bid}}" name="brand" value="{{b.bid}}" />{{b.name}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="cat">分类：<br />
+		<ul>
+			{% for c in cat_list %}
+			<li><input type="radio" id="c{{c.term_id}}" name="cat" value="{{c.term_id}}" />{{c.term_name}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>缩略图：<br />
+		<ul>
+			{% for p in pic_list %}
+			<li><input type="radio" id="p{{p.pic_id}}" name="thumbnail" value="{{p.pic_id}}" />{{p.url}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+		<script type = "text/javascript" >   
+			bid = document.getElementById("b{{brand.bid}}");
+			if(bid){bid.checked = true;}
+			cid = document.getElementById("c{{cat.term_id}}");
+			if(cid){cid.checked = true;}
+			pic_id = document.getElementById("p{{thumbnail.pic_id}}");
+			if(pic_id){pic_id.checked = true;}
+         </script>   
+<!-- 	<div>标签：<input type="text" name="terms" placeholder="标签" /></div> -->
+	<!-- <div><input type="text" name="term" value="{{term}}" /></div> -->
+	<!-- <div><input type="file" /></div> -->
+	<div>商品详情：<br /><textarea name="description" id="description" placeholder="商品详情">{{huo_description}}</textarea></div>
+	<button type="submit" class="btn btn-primary submit" style="width:200px">提交</button>
+	</div>
+</form>
+
+<script src="{{ STATIC_URL }}fu/fileuploader.js"></script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ name }} | 大皮子{% endblock %}
+{% block pagename %}huoPage{% endblock %}
+{% block content %}
+<div class="breadcrumb">
+	Sumscope DAP > 
+	{% for c in cat %}
+	<a href="/cat/{{c.term_id}}">{{c}}</a> > 
+	{% endfor %}
+	 任务详情
+</div>
+<div class="hTitle">
+	<h2><strong>{{ name }}</strong>
+		{% if user.is_authenticated %}
+		<a href="/edit-huo/?hid={{hid}}">编辑</a>
+		{% endif %}
+	</h2>
+</div>
+
+<div class="hDescription">{{description|safe}}</div>
+{% endblock %}
+{% block sidebar %}
+	<div class="huoBrand fix">
+		<div>
+			<div class="bLogo"><img src="{{brand.logo}}" alt="{{brand.name}}"></div>
+			<h3 class="bName">{{brand.name}}</h3>
+			<a href="{{brand.website}}" target="_blank">{{brand.website}}</a>
+			<p>{{brand.intro|safe}}</p>
+		</div>
+	</div>
+
+{% endblock %}
+{% block base_extend %}
+
+{% endblock %}
+

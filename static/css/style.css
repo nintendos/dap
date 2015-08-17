@@ -1,0 +1,72 @@
+@charset "UTF-8";
+/* SUMSCOPE Common Style Sheet
+ * Created: 2015-02
+ * Update: ----
+ * Author: JollyJ
+ * Copyright: SUMSCOPE
+ */
+
+/*******Reset CSS*******/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+fieldset,img{border:0;}
+:focus{outline:0;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400;}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+ol,ul{list-style:none;}
+table{border-collapse:collapse;border-spacing:0;}
+:link,:visited,ins{text-decoration:none;}
+
+/*******Basic*******/
+body{line-height:1.5;font-family:"Helvetica Neue","Helvetica","微软雅黑","Arial","sans-serif";color:#555;font-size:14px;background:#fff;overflow-x:hidden }
+a{color:#333;text-decoration: none;}
+a:hover{color:#30BD72;text-decoration:none}
+
+
+.fix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.fix{zoom:1;}
+
+h1,h2{font-size:24px;font-weight:900}
+h3,h4,h5,h6{font-size:16px;font-weight:900}
+table td,table th{padding:5px;}
+iframe{overflow: hidden;}
+
+input[type=text]{background:#bdb9a1;color:#39372c;border:none;height:28px;line-height: 28px;padding:0 5px;vertical-align:middle;} 
+input.hover{background: #dfdac0}
+input.focus{background: #fffae0}
+a.btn,input.btn{width:110px;height:40px;line-height:40px;color:#fefff1;font-size: 20px;font-weight: 700;border:0;text-align:center;display: block;background:#246868;cursor: pointer;}
+a.btn:hover,input.btn.hover{background:#287b7b}
+
+
+
+.i{width:40px;height:40px;background:url(../img/40.png) 0 0;background-repeat:no-repeat !important;vertical-align:middle;}
+span.i,em.i,a.i{display:-moz-inline-stack;display:inline-block;_display:inline;overflow:hidden;outline:none;font:0/0 sans-serif;text-align:left;text-indent:-9999px;*text-indent:0;zoom:1;}
+
+
+
+/*Header*/
+header{height:200px;overflow-x:hidden;background: #2CC0A7;padding:0 0 0 220px;}
+#headerTitle{padding-top: 70px;width: 1160px;margin:0 auto;}
+#headerTitle h2{font-size: 40px;color: #fff;margin-left: 20px}
+
+#headerTitle.fixed{background:#2CC0A7;position: fixed;left:200px;right:60px;height: 60px;padding-top:0;}
+#headerTitle.fixed h2{padding-top: 10px;font-size: 24px}
+
+/*Side Bar*/
+.logo{background: #eee;height:60px;}
+.logo img{width: 100px;margin: 15px 0 0 40px}
+#sideBar{position: fixed;left: 0;top:0;width:200px;background: #fff;}
+#sideBar dl{margin-left: 10px}
+#sideBar dt{font-size: 20px;margin-top: 20px}
+#sideBar dd a{line-height: 30px;font-size: 14px}
+
+/*Content*/
+#content{background:#efefef;width:100%;float:left;overflow-x:hidden;padding:100px 0 0 220px;height:100%;transition:padding-left 0.2s cubic-bezier(0.27, 0.22, 0.27, 0.94) 0s}
+.conWrap{width: 1160px;margin:0 auto;}
+
+.sectionText{float: left;width: 350px}
+.sectionImg{float: left;width: 750}
+
+/*Footer*/
+.footer{}
+
+

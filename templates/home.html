@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+
+{% csrf_token %}
+<div class="homeCon fix">
+	<ul>
+	{% for p in project_list %}
+	<li><a href="/project/{{p.term_id}}" >{{c.term_name}}</a></li>
+	{% endfor %}	
+	</ul>	
+</div>
+
+{% endblock %}
+
+

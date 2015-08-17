@@ -1,0 +1,65 @@
+<form action="{% if user.is_authenticated %}/create-huo/{% else %}{% url 'userena_signin' %}{% endif %}" method="post" id="createHuo">
+{% csrf_token %}
+
+	<div id="file-uploader-demo1">		
+		<noscript>			
+			<p>Please enable JavaScript to use file uploader.</p>
+			<!-- or put a simple form for upload here -->
+		</noscript>         
+	</div>
+
+	<div class="qq-upload-extra-drop-area">Drop files here too</div>
+    <div id="imgUrlList">
+    	<ul>
+    		<li><img src="" alt="" width="100"><input type="text" class="slt" value="" style="width:500px" onfocus="this.select()" /></li>
+    	</ul>
+    </div>
+    <script>        
+        function createUploader(){            
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('file-uploader-demo1'),
+                action: '/img-upload/',
+                debug: true,
+                extraDropzones: [qq.getByClass(document, 'qq-upload-extra-drop-area')[0]],
+                onComplete: function(id, fileName, responseJSON){
+	                 if (responseJSON.success){
+	                    $("#imgUrlList li input").val(responseJSON.img_url);
+	                    $("#imgUrlList li img").attr("src",responseJSON.img_url);
+	                }
+	                else{
+	                    alert("error");
+	                }               	
+                },
+                // csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
+            });           
+        }
+        
+        // in your app create uploader as soon as the DOM is ready
+        // don't wait for the window to load  
+        window.onload = createUploader;    
+
+    </script>    
+	<div class="createHuo">
+	<div>商品名称：<input type="text" name="name" placeholder="商品名称" /></div>
+	<div>品牌：<br />
+		<ul>
+			{% for b in brand_dict %}
+			<li><input type="checkbox" name="brand" value="{{b.bid}}" />{{b.name}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>分类：<br />
+		<ul>
+			{% for c in cat_dict %}
+			<li><input type="checkbox" name="cat" value="{{c.term_id}}" />{{c.term_name}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+<!-- 	<div>标签：<input type="text" name="terms" placeholder="标签" /></div> -->
+	<!-- <div><input type="text" name="term" value="{{term}}" /></div> -->
+	<!-- <div><input type="file" /></div> -->
+	<div>商品详情：<br /><textarea name="description" id="description" placeholder="商品详情" ></textarea></div>
+	<input type="hidden" name="tid" value="{{topic_id}}" />
+	<button type="submit" class="btn btn-primary submit" style="width:200px">提交</button>
+	</div>
+</form>

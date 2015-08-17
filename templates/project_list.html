@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% load mptt_tags %}
+
+<div class="catPage">
+ <div class="catList">
+	{% for nodes in roots %}
+	<ul>
+		{% drilldown_tree_for_node nodes as drilldown %}
+		{% for c in drilldown %}
+		<li>
+			<img src="{{ c.thumbnail }}" alt="" class="hThumbnail"><a href="/cat/{{c.term_id}}"  class="catName"><strong>{{c.term_name}}</strong></a><br />
+			<span class="catSummary">{{c.summary}}</span>
+		</li>
+		{% endfor %}
+	</ul>
+	{% endfor %}
+</div>
+
+</div>
+{% endblock %}
